@@ -73,3 +73,17 @@ fn score(a: u8, b: u8) -> i32 {
         MISMATCH_SCORE
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::align_sequences;
+
+    #[test]
+    fn test_alignment() {
+        let seq1 = "AGTACGCA";
+        let seq2 = "TATGC";
+        let (aligned_seq1, aligned_seq2) = align_sequences(seq1, seq2);
+        assert_eq!(aligned_seq1, "AGTACGCA");
+        assert_eq!(aligned_seq2, "--TATGC-");
+    }
+}
