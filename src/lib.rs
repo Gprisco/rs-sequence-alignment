@@ -6,15 +6,7 @@ pub fn align_sequences(sequence1: &str, sequence2: &str) -> (String, String) {
     let len1 = sequence1.len();
     let len2 = sequence2.len();
 
-    let mut dp = vec![vec![0; len2 + 1]; len1 + 1];
-
-    for i in 0..=len1 {
-        dp[i][0] = (i as i32) * GAP_PENALTY;
-    }
-
-    for j in 0..=len2 {
-        dp[0][j] = (j as i32) * GAP_PENALTY;
-    }
+    let mut dp = init_dp(len1 + 1, len2 + 1);
 
     for i in 1..=len1 {
         for j in 1..=len2 {
@@ -54,6 +46,20 @@ pub fn align_sequences(sequence1: &str, sequence2: &str) -> (String, String) {
     }
 
     (aligned_seq1, aligned_seq2)
+}
+
+fn init_dp(rows: usize, columns: usize) -> Vec<Vec<i32>> {
+    let mut dp = vec![vec![0; columns]; rows];
+
+    for i in 0..rows {
+        dp[i][0] = (i as i32) * GAP_PENALTY;
+    }
+
+    for j in 0..columns {
+        dp[0][j] = (j as i32) * GAP_PENALTY;
+    }
+
+    dp
 }
 
 fn max(a: i32, b: i32, c: i32) -> i32 {
